@@ -1,46 +1,92 @@
-import React, { useEffect, useRef } from 'react';
-import { Grid } from '@material-ui/core';
+import React from "react";
+import uuid from "uuid/v4";
 
-import { SpeechState, useSpeechContext } from "@speechly/react-client";
-import { PushToTalkButton, PushToTalkButtonContainer } from '@speechly/react-ui';
+import Container from "react-bootstrap/Container";
+import Jumbotron from "react-bootstrap/Jumbotron";
 
-import { Details, Main } from './components';
-import useStyles from './styles';
+import ExpenseForm from "./components/ExpenseForm";
+import Header from "./components/Header";
+import ExpenseTable from "./components/ExpenseTable";
 
-const App = () => {
-  const classes = useStyles();
-  const { speechState } = useSpeechContext();
-  const main = useRef(null)
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      item: "",
+      date: "",
+      location: "",
+      amount: "",
+      id: uuid(),
+      expenses: []
+    };
+    this.removeExpense = this.removeExpense.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.gatherOutput = this.gatherOutput.bind(this);
+  }
 
-  const executeScroll = () => main.current.scrollIntoView()    
+  gatherOutput(expense) {
+    this.setState({
+      expenses: [...this.state.expenses, expense]
+    });
+  }
 
-  useEffect(() => {
-    if (speechState === SpeechState.Recording) {
-      executeScroll();
-    }
-  }, [speechState]);
+  removeExpense(id, event) {
+    event.preventDefault();
+    this.setState({
+      expenses: this.state.expenses.filter(expense => {
+        return expense.id !== id;
+      })
+    });
+  }
 
-  return (
-    <div>
-      <Grid className={classes.grid} container spacing={0} alignItems="center" justify="center" style={{ height: '100vh'}}>
-        <Grid item xs={12} sm={4} className={classes.mobile}>
-          <Details title="Income" />
-        </Grid>
-        <Grid ref={main} item xs={12} sm={3} className={classes.main}>
-          <Main />
-        </Grid>
-        <Grid item xs={12} sm={4} className={classes.desktop}>
-          <Details title="Income" />
-        </Grid>
-        <Grid item xs={12} sm={4} className={classes.last}>
-          <Details title="Expense" />
-        </Grid>
-        <PushToTalkButtonContainer>
-          <PushToTalkButton />
-        </PushToTalkButtonContainer>
-      </Grid>
-    </div>
-  );
-};
+  handleSubmit(event) {
+    event.preventDefault();
+    this.gatherOutput({ ...this.state, id: uuid() });
+    this.setState({
+      item: "",
+      date: "",
+      amount: "",
+      location: ""
+    });
+  }
+
+  handleChange(event) {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <Header />
+        <Container>
+          <ExpenseForm
+            expenses={this.state.expenses}
+            item={this.state.item}
+            date={this.state.date}
+            amount={this.state.amount}
+            location={this.state.location}
+            handleChange={this.handleChange}
+            gatherOutput={this.gatherOutput}
+            handleSubmit={this.handleSubmit}
+          />
+        </Container>
+        <Container>
+          <Jumbotron>
+            <ExpenseTable
+              expenses={this.state.expenses}
+              removeExpense={this.removeExpense}
+              handleSubmit={this.handleSubmit}
+              handleChange={this.handleChange}
+              gatherOutput={this.gatherOutput}
+            />
+          </Jumbotron>
+        </Container>
+      </div>
+    );
+  }
+}
 
 export default App;

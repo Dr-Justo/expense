@@ -1,44 +1,44 @@
 {
-  "name": "speechly",
+  "name": "expense-tracker-app",
   "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@material-ui/core": "^4.11.2",
-    "@material-ui/icons": "^4.11.2",
-    "@material-ui/lab": "^4.0.0-alpha.57",
-    "@testing-library/jest-dom": "^5.11.6",
-    "@testing-library/react": "^11.2.2",
-    "@testing-library/user-event": "^12.5.0",
-    "chart.js": "^2.9.4",
-    "react": "^17.0.1",
-    "react-chartjs-2": "^2.11.1",
-    "react-dom": "^17.0.1",
-    "react-scripts": "4.0.1",
-    "uuid": "^8.3.1",
-    "web-vitals": "^0.2.4"
-  },
+  "description": "",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^4.4.1",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.16.0",
+    "react": "^16.12.0",
+    "react-bootstrap": "^1.0.0-beta.16",
+    "react-dom": "^16.12.0",
+    "style.css": "^1.0.0",
+    "uuid": "^3.4.0"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "babel-preset-nano-react-app": "^0.1.0",
+    "parcel-bundler": "^1.12.4"
+  },
+  "babel": {
+    "presets": [
+      "nano-react-app"
     ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+    "plugins": [
+      [
+        "@babel/plugin-proposal-class-properties",
+        {
+          "loose": true
+        }
+      ],
+      [
+        "@babel/plugin-transform-react-jsx",
+        {
+          "pragmaFrag": "React.Fragment"
+        }
+      ]
     ]
   }
 }
