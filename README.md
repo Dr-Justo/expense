@@ -1,6 +1,6 @@
 ## Expense Tracker App
 
-Keep track of where your hard earned money goes with this expense tracker app.
+Keep track of where your money goes with this expense tracker app.
 
  <img src="/images/frontend2.png"   title="HTML5 Powered"> <img src="/images/react3.png">
 
